@@ -10,23 +10,16 @@ const quadrantChartService = new QuadrantChartService(
 
 export const QuadrantChart = () => {
   useEffect(() => {
-    quadrantChartService.renderSVG('#quadrant-chart-container');
-
-    quadrantChartService.drawXAxis();
-
-    quadrantChartService.drawYAxis();
-
-    quadrantChartService.drawBottomLeftRect();
-
-    quadrantChartService.drawBottomRightRect();
-
-    quadrantChartService.drawTopLeftRect();
-
-    quadrantChartService.drawTopRightRect();
-
-    quadrantChartService.drawNodesContainer();
-
-    quadrantChartService.drawNodes();
+    quadrantChartService
+      .renderSVG('#quadrant-chart-container')
+      .drawXAxis()
+      .drawYAxis()
+      .drawBottomLeftRect()
+      .drawBottomRightRect()
+      .drawTopLeftRect()
+      .drawTopRightRect()
+      .drawNodesContainer()
+      .drawNodes();
   }, []);
 
   return (

@@ -41,6 +41,8 @@ export default class QuadrantChartService {
       .append('g')
       .attr('id', 'container')
       .attr('transform', `translate(${MARGIN_HORIZONTAL}, ${MARGIN_VERTICAL})`);
+
+    return this;
   }
 
   public createXScale() {
@@ -77,6 +79,8 @@ export default class QuadrantChartService {
       .attr('id', 'x-axis')
       .attr('transform', `translate(0, ${this._height})`)
       .call(xAxis);
+
+    return this;
   }
 
   public createYScale() {
@@ -111,6 +115,8 @@ export default class QuadrantChartService {
     const yAxis = this.createYAxis();
 
     d3.select(this.selector).append('g').attr('id', 'y-axis').call(yAxis);
+
+    return this;
   }
 
   public drawBottomLeftRect() {
@@ -121,6 +127,8 @@ export default class QuadrantChartService {
       .attr('width', this._width / 2)
       .attr('height', this._height / 2)
       .attr('fill', '#E5A5BC');
+
+    return this;
   }
 
   public drawBottomRightRect() {
@@ -131,6 +139,8 @@ export default class QuadrantChartService {
       .attr('width', this._width / 2)
       .attr('height', this._height / 2)
       .attr('fill', '#FFEFBB');
+
+    return this;
   }
 
   public drawTopLeftRect() {
@@ -141,6 +151,8 @@ export default class QuadrantChartService {
       .attr('width', this._width / 2)
       .attr('height', this._height / 2)
       .attr('fill', '#FFCBAE');
+
+    return this;
   }
 
   public drawTopRightRect() {
@@ -151,10 +163,14 @@ export default class QuadrantChartService {
       .attr('width', this._width / 2)
       .attr('height', this._height / 2)
       .attr('fill', '#9AE3B8');
+
+    return this;
   }
 
   public drawNodesContainer() {
     d3.select(this.selector).append('g').attr('id', 'nodes-container');
+
+    return this;
   }
 
   public drawNodes() {
@@ -184,5 +200,7 @@ export default class QuadrantChartService {
 
         return enterSelection;
       });
+
+    return this;
   }
 }
