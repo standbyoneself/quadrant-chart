@@ -1,8 +1,10 @@
 import * as d3 from 'd3';
-import { QUADRANT_CHART_X_DOMAIN, QUADRANT_CHART_Y_DOMAIN } from '../constants';
 
 const MARGIN_HORIZONTAL = 25;
 const MARGIN_VERTICAL = 25;
+
+const X_DOMAIN = [0, 5, 10, 50, 100];
+const Y_DOMAIN = [0, 0.5, 1, 10, 15];
 
 const DATA = [
   {
@@ -45,26 +47,29 @@ export default class QuadrantChartService {
     return this;
   }
 
-  private get xScale() {
+  public rerenderSVG(width: number) {
+    this._width = width;
+
+    d3.select(`#${this._id}`).attr('width', width + MARGIN_HORIZONTAL * 2);
+
+    return this;
+  }
+
+  private createXScale() {
     return d3
       .scaleLinear()
-      .domain(QUADRANT_CHART_X_DOMAIN)
+      .domain(X_DOMAIN)
       .range(
         d3
-          .range(
-            0,
-            this._width,
-            this._width / (QUADRANT_CHART_X_DOMAIN.length - 1)
-          )
+          .range(0, this._width, this._width / (X_DOMAIN.length - 1))
           .concat(this._width)
       );
   }
 
   private createXAxis() {
-    const xAxis = d3
-      .axisBottom(this.xScale)
-      .tickSize(0)
-      .tickValues(QUADRANT_CHART_X_DOMAIN);
+    const xScale = this.createXScale();
+
+    const xAxis = d3.axisBottom(xScale).tickSize(0).tickValues(X_DOMAIN);
 
     return xAxis;
   }
@@ -81,27 +86,31 @@ export default class QuadrantChartService {
     return this;
   }
 
-  private get yScale() {
+  public redrawXAxis() {
+    const xAxis = this.createXAxis();
+
+    d3.select(this.selector).select<SVGGElement>('#x-axis').call(xAxis);
+  }
+
+  private createYScale() {
     return d3
       .scaleLinear()
-      .domain(QUADRANT_CHART_Y_DOMAIN)
+      .domain(Y_DOMAIN)
       .range(
         d3
-          .range(
-            0,
-            this._height,
-            this._height / (QUADRANT_CHART_Y_DOMAIN.length - 1)
-          )
+          .range(0, this._height, this._height / (Y_DOMAIN.length - 1))
           .concat(this._height)
           .sort((a, b) => b - a)
       );
   }
 
   private createYAxis() {
+    const yScale = this.createYScale();
+
     const yAxis = d3
-      .axisLeft(this.yScale)
+      .axisLeft(yScale)
       .tickSize(0)
-      .tickValues(QUADRANT_CHART_Y_DOMAIN)
+      .tickValues(Y_DOMAIN)
       .tickFormat((value) => String(value));
 
     return yAxis;
@@ -170,14 +179,17 @@ export default class QuadrantChartService {
   }
 
   public drawNodes() {
+    const xScale = this.createXScale();
+    const yScale = this.createYScale();
+
     d3.select('#nodes-container')
       .selectAll('circle')
       .data(DATA)
       .join((enter) => {
         const enterSelection = enter
           .append('circle')
-          .attr('cx', (d) => this.xScale(d.x))
-          .attr('cy', (d) => this.yScale(d.y))
+          .attr('cx', (d) => xScale(d.x))
+          .attr('cy', (d) => yScale(d.y))
           .attr('r', 5)
           .attr('fill', '#fff')
           .on('mouseover', (event: MouseEvent, d) => {
