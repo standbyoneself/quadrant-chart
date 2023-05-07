@@ -6,7 +6,13 @@ const MARGIN_VERTICAL = 25;
 const X_DOMAIN = [0, 5, 10, 50, 100];
 const Y_DOMAIN = [0, 0.5, 1, 10, 15];
 
-const DATA = [
+interface DataEntry {
+  x: number;
+  y: number;
+  title: string;
+}
+
+const DATA: Array<DataEntry> = [
   {
     x: 5,
     y: 0.5,
@@ -168,6 +174,7 @@ export default class QuadrantChartService {
       .join((enter) => {
         const enterSelection = enter
           .append('circle')
+          .attr('class', 'node')
           .attr('cx', (d) => xScale(d.x))
           .attr('cy', (d) => yScale(d.y))
           .attr('r', 5)
@@ -187,5 +194,13 @@ export default class QuadrantChartService {
       });
 
     return this;
+  }
+
+  public redrawNodes() {
+    const xScale = this.createXScale();
+
+    d3.select(this.selector)
+      .selectAll<SVGCircleElement, DataEntry>('circle.node')
+      .attr('cx', (d) => xScale(d.x));
   }
 }

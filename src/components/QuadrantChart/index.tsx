@@ -40,7 +40,8 @@ export const QuadrantChart = () => {
         .redrawRect('bottom-left-rect', 0)
         .redrawRect('bottom-right-rect', quadrantChartService.width / 2)
         .redrawRect('top-left-rect', 0)
-        .redrawRect('top-right-rect', quadrantChartService.width / 2);
+        .redrawRect('top-right-rect', quadrantChartService.width / 2)
+        .redrawNodes();
     }
   }, [width]);
 
