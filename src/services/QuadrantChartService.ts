@@ -45,7 +45,7 @@ export default class QuadrantChartService {
     return this;
   }
 
-  public createXScale() {
+  private get xScale() {
     return d3
       .scaleLinear()
       .domain(QUADRANT_CHART_X_DOMAIN)
@@ -61,10 +61,8 @@ export default class QuadrantChartService {
   }
 
   private createXAxis() {
-    const xScale = this.createXScale();
-
     const xAxis = d3
-      .axisBottom(xScale)
+      .axisBottom(this.xScale)
       .tickSize(0)
       .tickValues(QUADRANT_CHART_X_DOMAIN);
 
@@ -83,7 +81,7 @@ export default class QuadrantChartService {
     return this;
   }
 
-  public createYScale() {
+  private get yScale() {
     return d3
       .scaleLinear()
       .domain(QUADRANT_CHART_Y_DOMAIN)
@@ -100,10 +98,8 @@ export default class QuadrantChartService {
   }
 
   private createYAxis() {
-    const yScale = this.createYScale();
-
     const yAxis = d3
-      .axisLeft(yScale)
+      .axisLeft(this.yScale)
       .tickSize(0)
       .tickValues(QUADRANT_CHART_Y_DOMAIN)
       .tickFormat((value) => String(value));
@@ -178,13 +174,10 @@ export default class QuadrantChartService {
       .selectAll('circle')
       .data(DATA)
       .join((enter) => {
-        const xScale = this.createXScale();
-        const yScale = this.createYScale();
-
         const enterSelection = enter
           .append('circle')
-          .attr('cx', (d) => xScale(d.x))
-          .attr('cy', (d) => yScale(d.y))
+          .attr('cx', (d) => this.xScale(d.x))
+          .attr('cy', (d) => this.yScale(d.y))
           .attr('r', 5)
           .attr('fill', '#fff')
           .on('mouseover', (event: MouseEvent, d) => {
