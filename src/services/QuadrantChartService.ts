@@ -34,6 +34,10 @@ export default class QuadrantChartService {
     return `#${this._id} > #container`;
   }
 
+  public get width() {
+    return this._width;
+  }
+
   public renderSVG(selector: string) {
     d3.select(selector)
       .append('svg')
@@ -90,6 +94,8 @@ export default class QuadrantChartService {
     const xAxis = this.createXAxis();
 
     d3.select(this.selector).select<SVGGElement>('#x-axis').call(xAxis);
+
+    return this;
   }
 
   private createYScale() {
@@ -124,50 +130,24 @@ export default class QuadrantChartService {
     return this;
   }
 
-  public drawBottomLeftRect() {
+  public drawRect(id: string, x: number, y: number, color: string) {
     d3.select(this.selector)
       .append('rect')
-      .attr('x', 0)
-      .attr('y', this._height / 2)
+      .attr('id', id)
+      .attr('x', x)
+      .attr('y', y)
       .attr('width', this._width / 2)
       .attr('height', this._height / 2)
-      .attr('fill', '#E5A5BC');
+      .attr('fill', color);
 
     return this;
   }
 
-  public drawBottomRightRect() {
+  public redrawRect(id: string, x: number) {
     d3.select(this.selector)
-      .append('rect')
-      .attr('x', this._width / 2)
-      .attr('y', this._height / 2)
-      .attr('width', this._width / 2)
-      .attr('height', this._height / 2)
-      .attr('fill', '#FFEFBB');
-
-    return this;
-  }
-
-  public drawTopLeftRect() {
-    d3.select(this.selector)
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', this._width / 2)
-      .attr('height', this._height / 2)
-      .attr('fill', '#FFCBAE');
-
-    return this;
-  }
-
-  public drawTopRightRect() {
-    d3.select(this.selector)
-      .append('rect')
-      .attr('x', this._width / 2)
-      .attr('y', 0)
-      .attr('width', this._width / 2)
-      .attr('height', this._height / 2)
-      .attr('fill', '#9AE3B8');
+      .select(`#${id}`)
+      .attr('x', x)
+      .attr('width', this._width / 2);
 
     return this;
   }
