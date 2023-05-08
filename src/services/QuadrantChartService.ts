@@ -1,7 +1,5 @@
 import * as d3 from 'd3';
-
-const MARGIN_HORIZONTAL = 25;
-const MARGIN_VERTICAL = 25;
+import D3ChartService from './D3ChartService';
 
 const X_DOMAIN = [0, 5, 10, 50, 100];
 const Y_DOMAIN = [0, 0.5, 1, 10, 15];
@@ -25,54 +23,15 @@ const DATA: Array<DataEntry> = [
   },
 ];
 
-export default class QuadrantChartService {
-  private _width: number;
-  private _height: number;
-  private _id: string;
-
-  constructor(width: number, height: number, id: string) {
-    this._width = width;
-    this._height = height;
-    this._id = id;
-  }
-
-  private get selector() {
-    return `#${this._id} > #container`;
-  }
-
-  public get width() {
-    return this._width;
-  }
-
-  public renderSVG(selector: string) {
-    d3.select(selector)
-      .append('svg')
-      .attr('id', this._id)
-      .attr('width', this._width + MARGIN_HORIZONTAL * 2)
-      .attr('height', this._height + MARGIN_VERTICAL * 2)
-      .append('g')
-      .attr('id', 'container')
-      .attr('transform', `translate(${MARGIN_HORIZONTAL}, ${MARGIN_VERTICAL})`);
-
-    return this;
-  }
-
-  public rerenderSVG(width: number) {
-    this._width = width;
-
-    d3.select(`#${this._id}`).attr('width', width + MARGIN_HORIZONTAL * 2);
-
-    return this;
-  }
-
+export default class QuadrantChartService extends D3ChartService {
   private createXScale() {
     return d3
       .scaleLinear()
       .domain(X_DOMAIN)
       .range(
         d3
-          .range(0, this._width, this._width / (X_DOMAIN.length - 1))
-          .concat(this._width)
+          .range(0, this.width, this.width / (X_DOMAIN.length - 1))
+          .concat(this.width)
       );
   }
 
@@ -90,7 +49,7 @@ export default class QuadrantChartService {
     d3.select(this.selector)
       .append('g')
       .attr('id', 'x-axis')
-      .attr('transform', `translate(0, ${this._height})`)
+      .attr('transform', `translate(0, ${this.height})`)
       .call(xAxis);
 
     return this;
@@ -110,8 +69,8 @@ export default class QuadrantChartService {
       .domain(Y_DOMAIN)
       .range(
         d3
-          .range(0, this._height, this._height / (Y_DOMAIN.length - 1))
-          .concat(this._height)
+          .range(0, this.height, this.height / (Y_DOMAIN.length - 1))
+          .concat(this.height)
           .sort((a, b) => b - a)
       );
   }
@@ -142,8 +101,8 @@ export default class QuadrantChartService {
       .attr('id', id)
       .attr('x', x)
       .attr('y', y)
-      .attr('width', this._width / 2)
-      .attr('height', this._height / 2)
+      .attr('width', this.width / 2)
+      .attr('height', this.height / 2)
       .attr('fill', color);
 
     return this;
@@ -153,7 +112,7 @@ export default class QuadrantChartService {
     d3.select(this.selector)
       .select(`#${id}`)
       .attr('x', x)
-      .attr('width', this._width / 2);
+      .attr('width', this.width / 2);
 
     return this;
   }
