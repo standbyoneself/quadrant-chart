@@ -58,7 +58,10 @@ export default class QuadrantChartService extends D3ChartService {
   public redrawXAxis() {
     const xAxis = this.createXAxis();
 
-    d3.select(this.selector).select<SVGGElement>('#x-axis').call(xAxis);
+    d3.select(this.selector)
+      .select<SVGGElement>('#x-axis')
+      .attr('transform', `translate(0, ${this.height})`)
+      .call(xAxis);
 
     return this;
   }
@@ -95,6 +98,14 @@ export default class QuadrantChartService extends D3ChartService {
     return this;
   }
 
+  public redrawYAxis() {
+    const yAxis = this.createYAxis();
+
+    d3.select(this.selector).select<SVGGElement>('#y-axis').call(yAxis);
+
+    return this;
+  }
+
   public drawRect(id: string, x: number, y: number, color: string) {
     d3.select(this.selector)
       .append('rect')
@@ -108,11 +119,13 @@ export default class QuadrantChartService extends D3ChartService {
     return this;
   }
 
-  public redrawRect(id: string, x: number) {
+  public redrawRect(id: string, x: number, y: number) {
     d3.select(this.selector)
       .select(`#${id}`)
       .attr('x', x)
-      .attr('width', this.width / 2);
+      .attr('y', y)
+      .attr('width', this.width / 2)
+      .attr('height', this.height / 2);
 
     return this;
   }
@@ -157,10 +170,12 @@ export default class QuadrantChartService extends D3ChartService {
 
   public redrawNodes() {
     const xScale = this.createXScale();
+    const yScale = this.createYScale();
 
     d3.select(this.selector)
       .selectAll<SVGCircleElement, DataEntry>('circle.node')
-      .attr('cx', (d) => xScale(d.x));
+      .attr('cx', (d) => xScale(d.x))
+      .attr('cy', (d) => yScale(d.y));
 
     return this;
   }

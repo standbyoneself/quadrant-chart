@@ -39,10 +39,13 @@ export default class D3ChartService {
     return this;
   }
 
-  public rerenderSVG(width: number) {
+  public rerenderSVG(width: number, height: number) {
     this._width = width;
+    this._height = height;
 
-    d3.select(`#${this._id}`).attr('width', width + MARGIN_HORIZONTAL * 2);
+    d3.select(`#${this._id}`)
+      .attr('width', width + MARGIN_HORIZONTAL * 2)
+      .attr('height', height + MARGIN_VERTICAL * 2);
 
     return this;
   }

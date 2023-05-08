@@ -12,7 +12,7 @@ const quadrantChartService = new QuadrantChartService(
 );
 
 export const QuadrantChart = () => {
-  const { ref, width = 0 } = useResizeObserver();
+  const { ref, width = 0, height = 0 } = useResizeObserver();
 
   useEffect(() => {
     quadrantChartService
@@ -35,15 +35,20 @@ export const QuadrantChart = () => {
   useEffect(() => {
     if (width > 0) {
       quadrantChartService
-        .rerenderSVG(width)
+        .rerenderSVG(width, height - 50)
         .redrawXAxis()
-        .redrawRect('bottom-left-rect', 0)
-        .redrawRect('bottom-right-rect', quadrantChartService.width / 2)
-        .redrawRect('top-left-rect', 0)
-        .redrawRect('top-right-rect', quadrantChartService.width / 2)
+        .redrawYAxis()
+        .redrawRect('bottom-left-rect', 0, quadrantChartService.height / 2)
+        .redrawRect(
+          'bottom-right-rect',
+          quadrantChartService.width / 2,
+          quadrantChartService.height / 2
+        )
+        .redrawRect('top-left-rect', 0, 0)
+        .redrawRect('top-right-rect', quadrantChartService.width / 2, 0)
         .redrawNodes();
     }
-  }, [width]);
+  }, [width, height]);
 
   return (
     <div className="quadrant-chart" id="quadrant-chart-container" ref={ref}>
