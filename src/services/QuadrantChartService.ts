@@ -161,5 +161,7 @@ export default class QuadrantChartService extends D3ChartService {
     d3.select(this.selector)
       .selectAll<SVGCircleElement, DataEntry>('circle.node')
       .attr('cx', (d) => xScale(d.x));
+
+    return this;
   }
 }
