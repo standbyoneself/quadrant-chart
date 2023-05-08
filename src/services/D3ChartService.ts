@@ -30,8 +30,8 @@ export default class D3ChartService {
     d3.select(selector)
       .append('svg')
       .attr('id', this._id)
-      .attr('width', this._width + MARGIN_HORIZONTAL * 2)
-      .attr('height', this._height + MARGIN_VERTICAL * 2)
+      .attr('width', this.width + MARGIN_HORIZONTAL * 2)
+      .attr('height', this.height + MARGIN_VERTICAL * 2)
       .append('g')
       .attr('id', 'container')
       .attr('transform', `translate(${MARGIN_HORIZONTAL}, ${MARGIN_VERTICAL})`);
