@@ -6,6 +6,8 @@ import useResizeObserver from 'use-resize-observer';
 const quadrantChartService = new QuadrantChartService(
   800,
   600,
+  25,
+  25,
   'quadrant-chart'
 );
 
