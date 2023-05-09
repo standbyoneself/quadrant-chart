@@ -3,11 +3,9 @@ import QuadrantChartService from '../../services/QuadrantChartService';
 import './style.css';
 import useResizeObserver from 'use-resize-observer';
 
-const HEIGHT = 600;
-
 const quadrantChartService = new QuadrantChartService(
   800,
-  HEIGHT,
+  600,
   'quadrant-chart'
 );
 
@@ -19,11 +17,16 @@ export const QuadrantChart = () => {
       .renderSVG('#quadrant-chart-container')
       .drawXAxis()
       .drawYAxis()
-      .drawRect('bottom-left-rect', 0, HEIGHT / 2, '#E5A5BC')
+      .drawRect(
+        'bottom-left-rect',
+        0,
+        quadrantChartService.height / 2,
+        '#E5A5BC'
+      )
       .drawRect(
         'bottom-right-rect',
         quadrantChartService.width / 2,
-        HEIGHT / 2,
+        quadrantChartService.height / 2,
         '#FFEFBB'
       )
       .drawRect('top-left-rect', 0, 0, '#FFCBAE')
