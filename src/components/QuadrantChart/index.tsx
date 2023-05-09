@@ -6,9 +6,9 @@ import useResizeObserver from 'use-resize-observer';
 const quadrantChartService = new QuadrantChartService(
   800,
   600,
+  'quadrant-chart',
   25,
-  25,
-  'quadrant-chart'
+  25
 );
 
 export const QuadrantChart = () => {

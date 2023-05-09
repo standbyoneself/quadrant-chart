@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import D3ChartService from './D3ChartService';
+import D3ChartWithMarginService from './D3ChartWithMarginService';
 
 const X_DOMAIN = [0, 5, 10, 50, 100];
 const Y_DOMAIN = [0, 0.5, 1, 10, 15];
@@ -23,7 +23,7 @@ const DATA: Array<DataEntry> = [
   },
 ];
 
-export default class QuadrantChartService extends D3ChartService {
+export default class QuadrantChartService extends D3ChartWithMarginService {
   private createXScale() {
     return d3
       .scaleLinear()

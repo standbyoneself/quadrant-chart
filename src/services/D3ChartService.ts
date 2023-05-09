@@ -1,28 +1,19 @@
 import * as d3 from 'd3';
+import { ID3ChartService } from '../types/chart';
 
-export default class D3ChartService {
-  private _width: number;
-  private _height: number;
-  private _marginHorizontal: number;
-  private _marginVertical: number;
-  private _id: string;
+export default class D3ChartService implements ID3ChartService {
+  protected _width: number;
+  protected _height: number;
+  protected _id: string;
 
-  constructor(
-    width: number,
-    height: number,
-    marginHorizontal: number,
-    marginVertical: number,
-    id: string
-  ) {
+  constructor(width: number, height: number, id: string) {
     this._width = width;
     this._height = height;
-    this._marginHorizontal = marginHorizontal;
-    this._marginVertical = marginVertical;
     this._id = id;
   }
 
   protected get selector() {
-    return `#${this._id} > #container`;
+    return `#${this._id}`;
   }
 
   public get width() {
@@ -37,14 +28,8 @@ export default class D3ChartService {
     d3.select(selector)
       .append('svg')
       .attr('id', this._id)
-      .attr('width', this.width + this._marginHorizontal * 2)
-      .attr('height', this.height + this._marginVertical * 2)
-      .append('g')
-      .attr('id', 'container')
-      .attr(
-        'transform',
-        `translate(${this._marginHorizontal}, ${this._marginVertical})`
-      );
+      .attr('width', this.width)
+      .attr('height', this.height);
 
     return this;
   }
@@ -53,9 +38,7 @@ export default class D3ChartService {
     this._width = width;
     this._height = height;
 
-    d3.select(`#${this._id}`)
-      .attr('width', width + this._marginHorizontal * 2)
-      .attr('height', height + this._marginVertical * 2);
+    d3.select(this.selector).attr('width', width).attr('height', height);
 
     return this;
   }
