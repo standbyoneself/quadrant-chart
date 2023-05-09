@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/quadrant-chart/static/css/main.5249c7f9.css",
-    "main.js": "/quadrant-chart/static/js/main.8c471ac3.js",
+    "main.js": "/quadrant-chart/static/js/main.a4ac56f7.js",
     "index.html": "/quadrant-chart/index.html",
     "main.5249c7f9.css.map": "/quadrant-chart/static/css/main.5249c7f9.css.map",
-    "main.8c471ac3.js.map": "/quadrant-chart/static/js/main.8c471ac3.js.map"
+    "main.a4ac56f7.js.map": "/quadrant-chart/static/js/main.a4ac56f7.js.map"
   },
   "entrypoints": [
     "static/css/main.5249c7f9.css",
-    "static/js/main.8c471ac3.js"
+    "static/js/main.a4ac56f7.js"
   ]
 }
