@@ -7,8 +7,12 @@ const quadrantChartService = new QuadrantChartService(
   800,
   600,
   'quadrant-chart',
-  25,
-  25
+  {
+    top: 25,
+    right: 25,
+    bottom: 25,
+    left: 25,
+  }
 );
 
 export const QuadrantChart = () => {
